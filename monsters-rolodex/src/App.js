@@ -13,7 +13,14 @@ class App extends Component {
     return (
       <div className="App">
         <h4>hi, {this.state.name}</h4>
-        <button>change name</button>
+        <button
+          onClick={() => {
+            this.setState({ name: 'react' });
+            console.log(this.state);
+          }}
+        >
+          change name
+        </button>
       </div>
     );
   }
