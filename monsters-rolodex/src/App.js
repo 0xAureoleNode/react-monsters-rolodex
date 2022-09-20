@@ -11,6 +11,7 @@ class App extends Component {
     };
     console.log('constructor');
   }
+
   componentDidMount() {
     console.log('lifeCycle');
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -26,10 +27,23 @@ class App extends Component {
         )
       );
   }
+
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   render() {
     console.log('render');
-    const filteredMonsters = this.state.monsters.filter((monster) =>
-      monster.name.toLowerCase().includes(this.state.searchField)
+
+    const { searchField, monsters } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField)
     );
     return (
       <div className="App">
@@ -37,13 +51,7 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={(event) => {
-            const searchField = event.target.value.toLocaleLowerCase();
-
-            this.setState(() => {
-              return { searchField };
-            });
-          }}
+          onChange={onSearchChange}
         />
         {filteredMonsters.map((monster) => (
           <div key={monster.id}>
